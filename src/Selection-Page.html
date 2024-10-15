@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Car Selection - Car Rental</title>
+    <link rel="icon" type="image/jpg" href="logo.jpg" />
+    <script
+      src="https://kit.fontawesome.com/535bd2fc8a.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="Selection_Page.js"></script>
+  </head>
+  <body class="font-sans bg-gray-100">
+    <nav
+      class="flex flex-wrap justify-between items-center px-4 sm:px-6 lg:px-8 py-4 bg-white"
+    >
+      <div><a href="index.html" class="font-bold text-xl">LOGO</a></div>
+      <button class="lg:hidden" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul
+        id="menu"
+        class="hidden lg:flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-6 w-full lg:w-auto mt-4 lg:mt-0"
+      >
+        <li class="hover:underline font-medium"><a href="index.html">HOME</a></li>
+        <li class="relative font-medium">
+          <a
+            href="#"
+            class="whitespace-nowrap truncate dropdown-btn hover:underline hover:underline-offset-4"
+            onclick="toggleDropdown('dropdown-menu')"
+            >BOOKING <i class="fas fa-caret-down"></i
+          ></a>
+          <ul
+            id="dropdown-menu"
+            class="hidden absolute bg-white shadow-lg mt-2 w-40 z-10"
+          >
+            <li
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left"
+              onclick="handleSelection('taxi.html')"
+            >
+              <a href="#">TAXI</a>
+            </li>
+            <li
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left"
+              onclick="handleSelection('self-driving.html')"
+            >
+              <a href="#">SELF DRIVING</a>
+            </li>
+            <li
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left"
+              onclick="handleSelection('acting.html')"
+            >
+              <a href="#">ACTING</a>
+            </li>
+            <li
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left"
+              onclick="handleSelection('goods.html')"
+            >
+              <a href="#">GOODS</a>
+            </li>
+          </ul>
+        </li>
+        <li class="hover:underline hover:underline-offset-4 font-medium">
+          <a href="#">ABOUT US</a>
+        </li>
+        <li class="hover:underline hover:underline-offset-4 font-medium">
+          <a href="#">CONTACT</a>
+        </li>
+      </ul>
+      <div class="hidden lg:block">
+        <button
+          class="font-sans p-2 bg-gray-900 text-white text-sm font-semibold rounded-lg border-solid border-2 border-black hover:bg-white hover:text-black sign-in-up-btn"
+          id="sign-btn-pop"
+        >
+          SIGN IN/UP
+        </button>
+      </div>
+    </nav>
+    <div
+      id="signModal"
+      class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden"
+    >
+      <div
+        class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+      >
+        <div class="mt-3 text-center">
+          <h3
+            class="text-lg leading-6 font-medium text-gray-900"
+            id="modalTitle"
+          >
+            Sign Up
+          </h3>
+          <div class="mt-2 px-7 py-3">
+            <form id="authForm">
+              <div class="mb-4" id="nameField">
+                <input
+                  type="text"
+                  placeholder="Name"
+                  class="w-full px-3 py-2 border rounded-md"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="email"
+                  placeholder="Email"
+                  class="w-full px-3 py-2 border rounded-md"
+                />
+              </div>
+              <div class="mb-4">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  class="w-full px-3 py-2 border rounded-md"
+                />
+              </div>
+              <button
+                type="submit"
+                class="w-full px-4 py-2 bg-black text-white rounded-md"
+              >
+                Sign Up
+              </button>
+            </form>
+            <p class="mt-4">
+              <a href="#" id="switchAuth" class="text-blue-500"
+                >Already have an account? Sign In</a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+      <h1 class="text-3xl font-bold mb-6">Select Your Car</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Car Card 1 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <img
+            src="chris-liverani-HUJDz6CJEaM-unsplash.jpg"
+            alt="Toyota Innova"
+            class="w-full h-48 object-cover"
+          />
+          <div class="p-4">
+            <h2 class="font-semibold text-xl mb-2">Toyota Innova</h2>
+            <p class="text-gray-600 mb-2">Diesel | 7 seater</p>
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-2xl font-bold">₹3000.00</span>
+              <span class="text-sm text-gray-500">per day</span>
+            </div>
+            <button
+              class="w-full bg-black text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+            >
+              Select
+            </button>
+          </div>
+        </div>
+
+        <!-- Car Card 2 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <img
+            src="chris-liverani-HUJDz6CJEaM-unsplash.jpg"
+            alt="Honda City"
+            class="w-full h-48 object-cover"
+          />
+          <div class="p-4">
+            <h2 class="font-semibold text-xl mb-2">Honda City</h2>
+            <p class="text-gray-600 mb-2">Petrol | 5 seater</p>
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-2xl font-bold">₹2500.00</span>
+              <span class="text-sm text-gray-500">per day</span>
+            </div>
+            <button
+              class="w-full bg-black text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+            >
+              Select
+            </button>
+          </div>
+        </div>
+
+        <!-- Car Card 3 -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <img
+            src="chris-liverani-HUJDz6CJEaM-unsplash.jpg"
+            alt="Maruti Swift"
+            class="w-full h-48 object-cover"
+          />
+          <div class="p-4">
+            <h2 class="font-semibold text-xl mb-2">Maruti Swift</h2>
+            <p class="text-gray-600 mb-2">Petrol | 5 seater</p>
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-2xl font-bold">₹2000.00</span>
+              <span class="text-sm text-gray-500">per day</span>
+            </div>
+            <button
+              class="w-full bg-black text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+            >
+              Select
+            </button>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <img
+            src="chris-liverani-HUJDz6CJEaM-unsplash.jpg"
+            alt="Maruti Swift"
+            class="w-full h-48 object-cover"
+          />
+          <div class="p-4">
+            <h2 class="font-semibold text-xl mb-2">Maruti Swift</h2>
+            <p class="text-gray-600 mb-2">Petrol | 5 seater</p>
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-2xl font-bold">₹2000.00</span>
+              <span class="text-sm text-gray-500">per day</span>
+            </div>
+            <button
+              class="w-full bg-black text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+            >
+              Select
+            </button>
+          </div>
+        </div>
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <img
+            src="chris-liverani-HUJDz6CJEaM-unsplash.jpg"
+            alt="Maruti Swift"
+            class="w-full h-48 object-cover"
+          />
+          <div class="p-4">
+            <h2 class="font-semibold text-xl mb-2">Maruti Swift</h2>
+            <p class="text-gray-600 mb-2">Petrol | 5 seater</p>
+            <div class="flex justify-between items-center mb-4">
+              <span class="text-2xl font-bold">₹2000.00</span>
+              <span class="text-sm text-gray-500">per day</span>
+            </div>
+            <button
+              class="w-full bg-black text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+            >
+              Select
+            </button>
+          </div>
+        </div>
+
+        <!-- Add more car cards as needed -->
+      </div>
+
+      <div class="mt-8">
+        <button
+          id="backToSearchBtn"
+          class="bg-black text-white p-2 rounded-lg px-4 hover:bg-gray-800 transition duration-300"
+        >
+          <i class="fas fa-arrow-left mr-2"></i> Back to Search
+        </button>
+      </div>
+    </div>
+
+    <footer class="bg-black text-white py-8 mt-16">
+      <!-- Add your footer content here, similar to the main page -->
+    </footer>
+  </body>
+</html>
