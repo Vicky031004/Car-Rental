@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acting Drivers - Your Travel Company</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="acting-driver.js"></script>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="bg-white shadow-md">
+        <nav class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <div class="text-xl font-bold">
+                    <a href="index.html">LOGO</a>
+                </div>
+                <div class="hidden md:flex space-x-4">
+                    <a href="index.html" class="hover:underline">HOME</a>
+                    <div class="relative group">
+                        <button class="hover:underline">BOOKING</button>
+                        <div class="absolute hidden group-hover:block bg-white shadow-md mt-2 py-2 w-40">
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">TAXI</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">SELF DRIVING</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">ACTING</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">GOODS</a>
+                        </div>
+                    </div>
+                    <a href="#" class="hover:underline">ABOUT US</a>
+                    <a href="#" class="hover:underline">CONTACT</a>
+                </div>
+                <div class="hidden md:block">
+                    <button class="bg-black text-white px-4 py-2 rounded">SIGN IN/UP</button>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="flex-grow container mx-auto px-6 py-8">
+        <h1 class="text-3xl font-bold mb-8">Acting Drivers</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Driver Card 1 -->
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="jon-flobrant-lRSChvh1Mhs-unsplash.jpg" alt="Driver 1" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold mb-2">John Doe</h2>
+                    <p class="text-gray-600 mb-4">Experienced actor and professional driver</p>
+                    <ul class="text-sm text-gray-600 mb-4">
+                        <li>5 years of acting experience</li>
+                        <li>Fluent in English and Spanish</li>
+                        <li>Comfortable with comedy and drama roles</li>
+                    </ul>
+                    <button class="bg-black text-white px-4 py-2 rounded w-full">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Driver Card 2 -->
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="jon-flobrant-lRSChvh1Mhs-unsplash.jpg" alt="Driver 2" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold mb-2">Jane Smith</h2>
+                    <p class="text-gray-600 mb-4">Versatile actress with excellent driving skills</p>
+                    <ul class="text-sm text-gray-600 mb-4">
+                        <li>7 years of acting experience</li>
+                        <li>Trained in method acting</li>
+                        <li>Experienced in both film and theater</li>
+                    </ul>
+                    <button class="bg-black text-white px-4 py-2 rounded w-full">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Driver Card 3 -->
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="jon-flobrant-lRSChvh1Mhs-unsplash.jpg" alt="Driver 3" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <h2 class="text-xl font-semibold mb-2">Mike Johnson</h2>
+                    <p class="text-gray-600 mb-4">Charismatic driver with improv skills</p>
+                    <ul class="text-sm text-gray-600 mb-4">
+                        <li>3 years of acting experience</li>
+                        <li>Specializes in improv and comedy</li>
+                        <li>Excellent customer service skills</li>
+                    </ul>
+                    <button class="bg-black text-white px-4 py-2 rounded w-full">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-gray-100 mt-12">
+        <div class="container mx-auto px-6 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="font-bold text-xl mb-4">LOGO</h3>
+                    <p class="text-gray-600">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ea cum fuga consectetur in pariatur voluptatum at, excepturi minima unde sed.</p>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl mb-4">Services</h3>
+                    <ul class="text-gray-600">
+                        <li class="mb-2"><a href="#" class="hover:underline">Round trip</a></li>
+                        <li class="mb-2"><a href="#" class="hover:underline">Cab</a></li>
+                        <li class="mb-2"><a href="#" class="hover:underline">Goods</a></li>
+                        <li class="mb-2"><a href="#" class="hover:underline">Acting drivers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-bold text-xl mb-4">Help</h3>
+                    <ul class="text-gray-600">
+                        <li class="mb-2"><a href="#" class="hover:underline">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="hover:underline">Email</a></li>
+                        <li class="mb-2"><a href="#" class="hover:underline">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-200 mt-8 pt-8 text-center text-gray-600">
+                © 2024 Your Travel Company, all rights reserved
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

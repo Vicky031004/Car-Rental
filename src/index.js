@@ -62,15 +62,127 @@ function handleDriverButtonClick(buttonId) {
   buttons.forEach((btn) => {
     const button = document.getElementById(btn);
     if (btn === buttonId) {
-      button.classList.remove("bg-white","text-black");
+      button.classList.remove("bg-white", "text-black");
       button.classList.add("bg-black", "text-white");
-    } 
-    else {
+    } else {
       button.classList.remove("bg-black", "text-white");
-      button.classList.add("bg-white","text-black");
+      button.classList.add("bg-white", "text-black");
     }
     button.classList.add("border-2", "border-black");
   });
+}
+
+function initializeAutocomplete() {
+  const pickupInput = document.getElementById("pickupLocation");
+  const dropInput = document.getElementById("dropLocation");
+
+  [pickupInput, dropInput].forEach((input) => {
+    let timeout = null;
+    input.addEventListener("input", function () {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        const query = this.value;
+        if (query.length > 2) {
+          fetchSuggestions(query, this);
+        } else {
+          clearSuggestions(this);
+        }
+      }, 300);
+    });
+  });
+
+  function fetchSuggestions(query, inputElement) {
+    const apiKey = 'e1667650735c48d09bd823db86badb4d';
+    const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&limit=5&apiKey=${apiKey}`;
+
+    console.log("Fetching suggestions for:", query);
+
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Received data:", data);
+        if (data.features && data.features.length > 0) {
+          displaySuggestions(data.features, inputElement);
+        } else {
+          console.warn("No suggestions found or invalid response format");
+          displaySuggestions([], inputElement);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching suggestions:", error);
+        displaySuggestions([], inputElement);
+      });
+  }
+
+  function displaySuggestions(suggestions, inputElement) {
+    let suggestionList = inputElement.nextElementSibling;
+    if (!suggestionList || !suggestionList.classList.contains("suggestion-list")) {
+      suggestionList = document.createElement("ul");
+      suggestionList.className = "suggestion-list absolute z-10 bg-white border border-gray-300 w-full mt-1 max-h-60 overflow-y-auto";
+      inputElement.parentNode.insertBefore(suggestionList, inputElement.nextSibling);
+    }
+
+    console.log("Displaying suggestions:", suggestions);
+
+    suggestionList.innerHTML = "";
+    if (suggestions && suggestions.length > 0) {
+      suggestions.forEach((suggestion) => {
+        const li = document.createElement("li");
+        li.textContent = suggestion.properties.formatted;
+        li.className = "px-4 py-2 hover:bg-gray-100 cursor-pointer";
+        li.addEventListener("click", () => {
+          inputElement.value = suggestion.properties.formatted;
+          clearSuggestions(inputElement);
+        });
+        suggestionList.appendChild(li);
+      });
+    } else {
+      const li = document.createElement("li");
+      li.textContent = "No suggestions found";
+      li.className = "px-4 py-2 text-gray-500";
+      suggestionList.appendChild(li);
+    }
+
+    // Ensure the suggestion list is visible and positioned correctly
+    suggestionList.style.display = "block";
+    suggestionList.style.position = "absolute";
+    suggestionList.style.zIndex = "1000";
+    suggestionList.style.backgroundColor = "white";
+    suggestionList.style.border = "1px solid black";
+    suggestionList.style.width = inputElement.offsetWidth + "px";
+    suggestionList.style.left = inputElement.offsetLeft + "px";
+    suggestionList.style.top = inputElement.offsetTop + inputElement.offsetHeight + "px";
+  }
+  function clearSuggestions(inputElement) {
+    const suggestionList = inputElement.nextElementSibling;
+    if (
+      suggestionList &&
+      suggestionList.classList.contains("suggestion-list")
+    ) {
+      suggestionList.innerHTML = "";
+      // Don't hide the list, just clear its contents
+      // suggestionList.style.display = "none";
+    }
+  }
+
+  document.addEventListener("click", function (e) {
+    const suggestionLists = document.querySelectorAll(".suggestion-list");
+    suggestionLists.forEach((list) => {
+      if (
+        !list.contains(e.target) &&
+        !list.previousElementSibling.contains(e.target)
+      ) {
+        clearSuggestions(list.previousElementSibling);
+      }
+    });
+  });
+
+  console.log("Autocomplete initialized");
 }
 
 // Event listener for DOMContentLoaded
@@ -200,6 +312,27 @@ document.addEventListener("DOMContentLoaded", function () {
       const returnDate = document.getElementById("returnDate").value;
       const returnTime = document.getElementById("returnTime").value;
 
+      let driverOption = "";
+      if (
+        document.getElementById("withDriverBtn").classList.contains("bg-black")
+      ) {
+        driverOption = "withDriver";
+      } else if (
+        document
+          .getElementById("withoutDriverBtn")
+          .classList.contains("bg-black")
+      ) {
+        driverOption = "withoutDriver";
+      } else if (
+        document.getElementById("driverOnlyBtn").classList.contains("bg-black")
+      ) {
+        driverOption = "driverOnly";
+      } else if (
+        document.getElementById("goodsBtn").classList.contains("bg-black")
+      ) {
+        driverOption = "goods";
+      }
+
       // Store form data in localStorage
       localStorage.setItem(
         "searchData",
@@ -211,6 +344,7 @@ document.addEventListener("DOMContentLoaded", function () {
           returnDate,
           returnTime,
           tripType: tripType,
+          driverOption: driverOption,
         })
       );
 
@@ -221,18 +355,29 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       // Check which driver option is selected
-      if (document.getElementById("withDriverBtn").classList.contains("bg-black") ||
-          document.getElementById("withoutDriverBtn").classList.contains("bg-black")) {
-        // Redirect to car selection page for "With Driver" or "Without Driver"
+      if (driverOption === "driverOnly") {
+        window.location.href = "acting-driver.html";
+      } else if (
+        driverOption === "withDriver" ||
+        driverOption === "withoutDriver"
+      ) {
         window.location.href = "Selection-Page.html";
+      } else if (driverOption === "goods") {
+        // For "goods" option, you might want to create a separate page or handle it differently
+        alert(
+          "Goods transportation option selected. This feature is not implemented yet."
+        );
       } else {
-        // Refresh the page for "Driver Only" and "Goods"
-        window.location.reload();
+        // If no option is selected, show an alert
+        alert("Please select a driver option");
       }
     } else {
       alert("Please fill in all fields");
     }
   });
+
+  // Initialize autocomplete for location inputs
+  initializeAutocomplete();
 
   console.log("Search script loaded");
 });
