@@ -1,4 +1,56 @@
+// Helper function to capitalize the first letter of a string
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// Debug function to toggle the mobile menu
+function toggleMenu() {
+  console.log("toggleMenu function called");
+  const menu = document.getElementById("menu");
+  const menuButton = document.querySelector("button.lg\\:hidden");
+  
+  if (menu && menuButton) {
+    console.log("Menu visibility before toggle:", menu.classList.contains("hidden") ? "hidden" : "visible");
+    menu.classList.toggle("hidden");
+    console.log("Menu visibility after toggle:", menu.classList.contains("hidden") ? "hidden" : "visible");
+    
+    // Toggle aria-expanded attribute
+    const isExpanded = menu.classList.contains("hidden") ? "false" : "true";
+    menuButton.setAttribute("aria-expanded", isExpanded);
+    console.log("Button aria-expanded set to:", isExpanded);
+  } else {
+    console.error("Menu or button element not found");
+    if (!menu) console.error("Menu element is missing");
+    if (!menuButton) console.error("Menu button is missing");
+  }
+}
+
+// Function to toggle dropdowns
+function toggleDropdown(dropdownId) {
+  const dropdown = document.getElementById(dropdownId);
+  dropdown.classList.toggle("hidden");
+}
+
+// Function to handle selection
+function handleSelection(url) {
+  if (url) {
+    window.location.href = url;
+  }
+}
+
+// Event listener for DOMContentLoaded
 document.addEventListener("DOMContentLoaded", function () {
+  console.log("DOMContentLoaded event fired");
+
+  // Attach click event to menu button
+  const menuButton = document.querySelector("button.lg\\:hidden");
+  if (menuButton) {
+    console.log("Menu button found, attaching click event");
+    menuButton.addEventListener("click", toggleMenu);
+  } else {
+    console.error("Menu button not found");
+  }
+
   // Retrieve search data from localStorage
   const searchData = JSON.parse(localStorage.getItem("searchData"));
 
@@ -13,13 +65,29 @@ document.addEventListener("DOMContentLoaded", function () {
       "mb-6"
     );
     searchSummary.innerHTML = `
-        <h2 class="font-semibold text-xl mb-2">Your Search</h2>
-        <p><strong>Trip Type:</strong> ${searchData.tripType}</p>
-        <p><strong>Pickup:</strong> ${searchData.pickupLocation}</p>
-        <p><strong>Drop-off:</strong> ${searchData.dropLocation}</p>
-        <p><strong>Date:</strong> ${searchData.pickupDate}</p>
-        <p><strong>Time:</strong> ${searchData.pickupTime}</p>
-      `;
+      <h2 class="font-semibold text-xl mb-2">Your Search</h2>
+      <div style="display: grid; grid-template-columns: auto auto 1fr; gap: 0.5rem 0.5rem; align-items: baseline;">
+        <strong>Trip Type</strong>
+        <span>:</span>
+        <span>${capitalizeFirstLetter(searchData.tripType)}</span>
+        
+        <strong>Pickup</strong>
+        <span>:</span>
+        <span>${capitalizeFirstLetter(searchData.pickupLocation)}</span>
+        
+        <strong>Drop-off</strong>
+        <span>:</span>
+        <span>${capitalizeFirstLetter(searchData.dropLocation)}</span>
+        
+        <strong>Date</strong>
+        <span>:</span>
+        <span>${searchData.pickupDate}</span>
+        
+        <strong>Time</strong>
+        <span>:</span>
+        <span>${searchData.pickupTime}</span>
+      </div>
+    `;
     document
       .querySelector(".container")
       .insertBefore(
@@ -54,15 +122,68 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Add event listener to "Back to Search" button
-  const backButton = document.querySelector("button:not(.bg-black)");
-  backButton.addEventListener("click", function () {
-    window.location.href = "index.html";
+  const backButton = document.querySelector("#backToSearchBtn");
+  if (backButton) {
+    backButton.addEventListener("click", function () {
+      window.location.href = "index.html";
+    });
+  }
+
+  // Add event listener to sign in/up button
+  const signBtns = document.querySelectorAll(".sign-in-up-btn");
+  const signModal = document.getElementById("signModal");
+  const modalTitle = document.getElementById("modalTitle");
+  const switchAuth = document.getElementById("switchAuth");
+  const nameField = document.getElementById("nameField");
+  const authForm = document.getElementById("authForm");
+
+  let isSignUp = true;
+
+  signBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      signModal.classList.remove("hidden");
+    });
+  });
+
+  // Close modal when clicking outside
+  signModal.addEventListener("click", (e) => {
+    if (e.target === signModal) {
+      signModal.classList.add("hidden");
+    }
+  });
+
+  // Switch between sign up and sign in
+  switchAuth.addEventListener("click", (e) => {
+    e.preventDefault();
+    isSignUp = !isSignUp;
+    if (isSignUp) {
+      modalTitle.textContent = "Sign Up";
+      switchAuth.textContent = "Already have an account? Sign In";
+      nameField.style.display = "block";
+    } else {
+      modalTitle.textContent = "Sign In";
+      switchAuth.textContent = "Don't have an account? Sign Up";
+      nameField.style.display = "none";
+    }
+  });
+
+  // Handle form submission
+  authForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    console.log(isSignUp ? "Sign Up" : "Sign In", "submitted");
+    signModal.classList.add("hidden");
   });
 });
-const backButton = document.querySelector("#backToSearchBtn");
-backButton.addEventListener("click", function () {
-  window.location.href = "index.html";
-});
-document.getElementById("sign-btn-pop").addEventListener("click", function () {
-  document.getElementById("signModal").classList.remove("hidden");
-});
+
+// Close dropdowns when clicking outside
+window.onclick = function (event) {
+  const dropdown = document.getElementById("dropdown-menu");
+  if (!event.target.matches(".dropdown-btn")) {
+    if (!dropdown.classList.contains("hidden")) {
+      dropdown.classList.add("hidden");
+    }
+  }
+};
+
+// Log when the script runs
+console.log("Full JavaScript for Car Selection Page loaded");
