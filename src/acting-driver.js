@@ -48,12 +48,9 @@ function displaySearchData(data) {
     "mb-6"
   );
   searchSummary.innerHTML = `
-      <h2 class="font-semibold text-xl mb-2">Your Search</h2>
+      <h2 class="font-bold text-xl mb-4">Your Search</h2>
       <div style="display: grid; grid-template-columns: auto auto 1fr; gap: 0.5rem 0.5rem; align-items: baseline;">
-        <strong>Trip Type</strong>
-        <span>:</span>
-        <span>${capitalizeFirstLetter(data.tripType)}</span>
-        
+
         <strong>Pickup Location</strong>
         <span>:</span>
         <span>${capitalizeFirstLetter(data.pickupLocation)}</span>
