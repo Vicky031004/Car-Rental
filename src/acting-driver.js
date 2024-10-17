@@ -6,32 +6,21 @@ function capitalizeFirstLetter(string) {
 // Function to toggle mobile menu
 function toggleMenu() {
   console.log("toggleMenu function called");
-  const menu = document.querySelector("nav > div > div:nth-child(2)");
+  const menu = document.getElementById("menu");
   const menuButton = document.getElementById("menu-toggle");
 
   if (menu && menuButton) {
-    console.log(
-      "Menu visibility before toggle:",
-      menu.classList.contains("hidden") ? "hidden" : "visible"
-    );
     menu.classList.toggle("hidden");
-    console.log(
-      "Menu visibility after toggle:",
-      menu.classList.contains("hidden") ? "hidden" : "visible"
-    );
+    menu.classList.toggle("flex");
 
-    // Toggle aria-expanded attribute
-    const isExpanded = menu.classList.contains("hidden") ? "false" : "true";
-    menuButton.setAttribute("aria-expanded", isExpanded);
-    console.log("Button aria-expanded set to:", isExpanded);
+    // Toggle button icon
+    menuButton.querySelector(".open-icon").classList.toggle("hidden");
+    menuButton.querySelector(".close-icon").classList.toggle("hidden");
   } else {
     console.error("Menu or button element not found");
-    if (!menu) console.error("Menu element is missing");
-    if (!menuButton) console.error("Menu button is missing");
   }
 }
 
-// Function to toggle dropdown visibility
 function toggleDropdown(dropdownId) {
   const dropdown = document.getElementById(dropdownId);
   dropdown.classList.toggle("hidden");
@@ -48,30 +37,29 @@ function displaySearchData(data) {
     "mb-6"
   );
   searchSummary.innerHTML = `
-      <h2 class="font-bold text-xl mb-4">Your Search</h2>
-      <div style="display: grid; grid-template-columns: auto auto 1fr; gap: 0.5rem 0.5rem; align-items: baseline;">
-
-        <strong>Pickup Location</strong>
-        <span>:</span>
-        <span>${capitalizeFirstLetter(data.pickupLocation)}</span>
-        
-        <strong>Drop-off Location</strong>
-        <span>:</span>
-        <span>${capitalizeFirstLetter(data.dropLocation)}</span>
-        
-        <strong>Date</strong>
-        <span>:</span>
-        <span>${data.pickupDate}</span>
-        
-        <strong>Time</strong>
-        <span>:</span>
-        <span>${data.pickupTime}</span>
-        
-        <strong>Driver</strong>
-        <span>:</span>
-        <span>Acting Driver</span>
-      </div>
-    `;
+    <h2 class="font-bold text-xl mb-4">Your Search</h2>
+    <div style="display: grid; grid-template-columns: auto auto 1fr; gap: 0.5rem 0.5rem; align-items: baseline;">
+      <strong>Pickup Location</strong>
+      <span>:</span>
+      <span>${capitalizeFirstLetter(data.pickupLocation)}</span>
+      
+      <strong>Drop-off Location</strong>
+      <span>:</span>
+      <span>${capitalizeFirstLetter(data.dropLocation)}</span>
+      
+      <strong>Date</strong>
+      <span>:</span>
+      <span>${data.pickupDate || "N/A"}</span>
+      
+      <strong>Time</strong>
+      <span>:</span>
+      <span>${data.pickupTime || "N/A"}</span>
+      
+      <strong>Driver</strong>
+      <span>:</span>
+      <span>Acting Driver</span>
+    </div>
+  `;
 
   const mainContent = document.querySelector("main");
   mainContent.insertBefore(searchSummary, mainContent.firstChild);
@@ -89,9 +77,9 @@ function displayNoSearchMessage() {
     "mb-8"
   );
   messageContainer.innerHTML = `
-      <p class="font-bold">No search data found</p>
-      <p>Please go back to the homepage and search for an acting driver.</p>
-    `;
+    <p class="font-bold">No search data found</p>
+    <p>Please go back to the homepage and search for an acting driver.</p>
+  `;
 
   const mainContent = document.querySelector("main");
   mainContent.insertBefore(messageContainer, mainContent.firstChild);
@@ -108,21 +96,40 @@ function filterDrivers(searchData) {
 
 // Function to handle booking
 function handleBooking(event) {
-  const driverCard = event.target.closest("div");
+  const driverCard = event.target.closest(".driver-card");
   const driverName = driverCard.querySelector("h2").textContent;
   const searchData = JSON.parse(localStorage.getItem("searchData"));
 
-  if (searchData) {
+  console.log("Booking initiated for:", driverName);
+  console.log("Search data:", searchData);
+
+  if (searchData && searchData.pickupLocation && searchData.dropLocation) {
     alert(`Booking process initiated for ${driverName}.\n
-        Pick-up: ${searchData.pickupLocation} on ${searchData.pickupDate} at ${searchData.pickupTime}\n
-        Drop-off: ${searchData.dropLocation} on ${searchData.returnDate} at ${searchData.returnTime}`);
+      Pick-up: ${searchData.pickupLocation} on ${
+      searchData.pickupDate || "N/A"
+    } at ${searchData.pickupTime || "N/A"}\n
+      Drop-off: ${searchData.dropLocation} on ${
+      searchData.returnDate || "N/A"
+    } at ${searchData.returnTime || "N/A"}`);
   } else {
     alert(
-      `Booking process initiated for ${driverName}. No search data available.`
+      `Booking process initiated for ${driverName}. No complete search data available.`
     );
   }
+
   // Here you would typically initiate the booking process,
   // perhaps by opening a modal or navigating to a booking page
+}
+
+// Function to toggle booking options dropdown
+function toggleBookingOptions(event) {
+  console.log("Toggle booking options called");
+  const dropdown = event.target.nextElementSibling;
+  if (dropdown) {
+    dropdown.classList.toggle("hidden");
+  } else {
+    console.error("Dropdown element not found");
+  }
 }
 
 // Event listener for DOMContentLoaded
@@ -131,6 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Retrieve search data from localStorage
   const searchData = JSON.parse(localStorage.getItem("searchData"));
+  console.log("Retrieved search data:", searchData);
 
   // Display search data if available
   if (searchData && searchData.driverOption === "driverOnly") {
@@ -141,29 +149,36 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Set up event listeners for booking buttons
-  const bookButtons = document.querySelectorAll("button");
+  const bookButtons = document.querySelectorAll(".book-now-btn");
   bookButtons.forEach((button) => {
-    if (button.textContent === "Book Now") {
-      button.addEventListener("click", handleBooking);
-    }
+    button.addEventListener("click", function (event) {
+      console.log("Book Now button clicked");
+      toggleBookingOptions(event);
+    });
+  });
+
+  // Set up event listeners for booking options
+  const bookingOptions = document.querySelectorAll(".booking-option");
+  bookingOptions.forEach((option) => {
+    option.addEventListener("click", handleBooking);
   });
 
   // Mobile menu toggle
   const menuToggle = document.getElementById("menu-toggle");
   if (menuToggle) {
     menuToggle.addEventListener("click", toggleMenu);
+    console.log("Menu toggle event listener added");
+  } else {
+    console.error("Menu toggle button not found");
   }
 
   // Dropdown functionality
-  const dropdownBtn = document.querySelector(".group > button");
+  const dropdownBtn = document.querySelector(".dropdown-btn");
   if (dropdownBtn) {
     dropdownBtn.addEventListener("click", () =>
       toggleDropdown("dropdown-menu")
     );
   }
-
-  // Log the retrieved data (for debugging)
-  console.log("Retrieved search data:", searchData);
 
   // Add event listener to "Back to Search" button
   const backButton = document.querySelector("#backToSearchBtn");
@@ -171,6 +186,21 @@ document.addEventListener("DOMContentLoaded", function () {
     backButton.addEventListener("click", function () {
       window.location.href = "index.html";
     });
+  }
+
+  // Add event listener to booking button in navbar
+  const bookingNavBtn = document.querySelector(".booking-nav-btn");
+  if (bookingNavBtn) {
+    bookingNavBtn.addEventListener("click", function () {
+      console.log("Booking nav button clicked");
+      // Add your desired action here, e.g., scroll to booking section
+      const bookingSection = document.querySelector("#booking-section");
+      if (bookingSection) {
+        bookingSection.scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  } else {
+    console.error("Booking nav button not found");
   }
 
   // Add event listener to sign in/up button
@@ -185,6 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   signBtns.forEach((btn) => {
     btn.addEventListener("click", () => {
+      console.log("Sign button clicked");
       signModal.classList.remove("hidden");
     });
   });
@@ -221,14 +252,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Close dropdowns when clicking outside
 window.onclick = function (event) {
-  if (!event.target.matches(".group > button")) {
-    const dropdowns = document.getElementsByClassName("group-hover:block");
-    for (let i = 0; i < dropdowns.length; i++) {
-      const openDropdown = dropdowns[i];
+  if (!event.target.matches(".book-now-btn")) {
+    const dropdowns = document.querySelectorAll(".booking-options");
+    dropdowns.forEach((openDropdown) => {
       if (!openDropdown.classList.contains("hidden")) {
         openDropdown.classList.add("hidden");
       }
-    }
+    });
   }
 };
 

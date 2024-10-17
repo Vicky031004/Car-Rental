@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("Retrieved search data:", searchData);
 
   // Add event listeners to all "Select" buttons
-  const selectButtons = document.querySelectorAll(".bg-black");
+  const selectButtons = document.querySelectorAll(".bg-gray-900");
   selectButtons.forEach((button) => {
     button.addEventListener("click", function () {
       const carCard = this.closest(".bg-white");

@@ -46,8 +46,8 @@ function areAllFieldsFilled() {
 // Function to check if either "With Driver" or "Without Driver" is selected
 function isDriverOptionSelected() {
   return (
-    document.getElementById("withDriverBtn").classList.contains("bg-black") ||
-    document.getElementById("withoutDriverBtn").classList.contains("bg-black")
+    document.getElementById("withDriverBtn").classList.contains("bg-gray-900") ||
+    document.getElementById("withoutDriverBtn").classList.contains("bg-gray-900")
   );
 }
 
@@ -62,13 +62,13 @@ function handleDriverButtonClick(buttonId) {
   buttons.forEach((btn) => {
     const button = document.getElementById(btn);
     if (btn === buttonId) {
-      button.classList.remove("bg-white", "text-black");
-      button.classList.add("bg-black", "text-white");
+      button.classList.remove("bg-white", "text-gray-900");
+      button.classList.add("bg-gray-900", "text-white");
     } else {
-      button.classList.remove("bg-black", "text-white");
-      button.classList.add("bg-white", "text-black");
+      button.classList.remove("bg-gray-900", "text-white");
+      button.classList.add("bg-white", "text-gray-900");
     }
-    button.classList.add("border-2", "border-black");
+    button.classList.add("border-2", "border-gray-900");
   });
 }
 
@@ -92,8 +92,10 @@ function initializeAutocomplete() {
   });
 
   function fetchSuggestions(query, inputElement) {
-    const apiKey = 'e1667650735c48d09bd823db86badb4d';
-    const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(query)}&limit=5&apiKey=${apiKey}`;
+    const apiKey = "YOUR_OPENCAGE_API_KEY"; // Replace with your actual API key
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(
+      query
+    )}&key=${apiKey}&limit=5`;
 
     console.log("Fetching suggestions for:", query);
 
@@ -106,8 +108,8 @@ function initializeAutocomplete() {
       })
       .then((data) => {
         console.log("Received data:", data);
-        if (data.features && data.features.length > 0) {
-          displaySuggestions(data.features, inputElement);
+        if (data.results && data.results.length > 0) {
+          displaySuggestions(data.results, inputElement);
         } else {
           console.warn("No suggestions found or invalid response format");
           displaySuggestions([], inputElement);
@@ -121,10 +123,17 @@ function initializeAutocomplete() {
 
   function displaySuggestions(suggestions, inputElement) {
     let suggestionList = inputElement.nextElementSibling;
-    if (!suggestionList || !suggestionList.classList.contains("suggestion-list")) {
+    if (
+      !suggestionList ||
+      !suggestionList.classList.contains("suggestion-list")
+    ) {
       suggestionList = document.createElement("ul");
-      suggestionList.className = "suggestion-list absolute z-10 bg-white border border-gray-300 w-full mt-1 max-h-60 overflow-y-auto";
-      inputElement.parentNode.insertBefore(suggestionList, inputElement.nextSibling);
+      suggestionList.className =
+        "suggestion-list absolute z-10 bg-white border border-gray-300 w-full mt-1 max-h-60 overflow-y-auto";
+      inputElement.parentNode.insertBefore(
+        suggestionList,
+        inputElement.nextSibling
+      );
     }
 
     console.log("Displaying suggestions:", suggestions);
@@ -133,10 +142,10 @@ function initializeAutocomplete() {
     if (suggestions && suggestions.length > 0) {
       suggestions.forEach((suggestion) => {
         const li = document.createElement("li");
-        li.textContent = suggestion.properties.formatted;
+        li.textContent = suggestion.formatted;
         li.className = "px-4 py-2 hover:bg-gray-100 cursor-pointer";
         li.addEventListener("click", () => {
-          inputElement.value = suggestion.properties.formatted;
+          inputElement.value = suggestion.formatted;
           clearSuggestions(inputElement);
         });
         suggestionList.appendChild(li);
@@ -153,11 +162,13 @@ function initializeAutocomplete() {
     suggestionList.style.position = "absolute";
     suggestionList.style.zIndex = "1000";
     suggestionList.style.backgroundColor = "white";
-    suggestionList.style.border = "1px solid black";
+    suggestionList.style.border = "1px solid gray-900";
     suggestionList.style.width = inputElement.offsetWidth + "px";
     suggestionList.style.left = inputElement.offsetLeft + "px";
-    suggestionList.style.top = inputElement.offsetTop + inputElement.offsetHeight + "px";
+    suggestionList.style.top =
+      inputElement.offsetTop + inputElement.offsetHeight + "px";
   }
+
   function clearSuggestions(inputElement) {
     const suggestionList = inputElement.nextElementSibling;
     if (
@@ -238,12 +249,12 @@ document.addEventListener("DOMContentLoaded", function () {
   let tripType = "hourly";
 
   // Initialize button styles
-  hourlyBtn.classList.add("bg-black", "text-white");
+  hourlyBtn.classList.add("bg-gray-900", "text-white");
   roundTripBtn.classList.add(
     "bg-white",
-    "text-black",
+    "text-gray-900",
     "border-2",
-    "border-black"
+    "border-gray-900"
   );
 
   // Event listeners for trip type buttons
@@ -251,17 +262,17 @@ document.addEventListener("DOMContentLoaded", function () {
     tripType = "hourly";
     hourlyBtn.classList.remove(
       "bg-white",
-      "text-black",
+      "text-gray-900",
       "border-2",
-      "border-black"
+      "border-gray-900"
     );
-    hourlyBtn.classList.add("bg-black", "text-white");
-    roundTripBtn.classList.remove("bg-black", "text-white");
+    hourlyBtn.classList.add("bg-gray-900", "text-white");
+    roundTripBtn.classList.remove("bg-gray-900", "text-white");
     roundTripBtn.classList.add(
       "bg-white",
-      "text-black",
+      "text-gray-900",
       "border-2",
-      "border-black"
+      "border-gray-900"
     );
   });
 
@@ -269,17 +280,17 @@ document.addEventListener("DOMContentLoaded", function () {
     tripType = "roundTrip";
     roundTripBtn.classList.remove(
       "bg-white",
-      "text-black",
+      "text-gray-900",
       "border-2",
-      "border-black"
+      "border-gray-900"
     );
-    roundTripBtn.classList.add("bg-black", "text-white");
-    hourlyBtn.classList.remove("bg-black", "text-white");
+    roundTripBtn.classList.add("bg-gray-900", "text-white");
+    hourlyBtn.classList.remove("bg-gray-900", "text-white");
     hourlyBtn.classList.add(
       "bg-white",
-      "text-black",
+      "text-gray-900",
       "border-2",
-      "border-black"
+      "border-gray-900"
     );
   });
 
@@ -292,8 +303,8 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
   driverButtons.forEach((btn) => {
     const button = document.getElementById(btn);
-    // Set initial style with black text
-    button.classList.add("bg-white", "text-black", "border-2", "border-black");
+    // Set initial style with gray-900 text
+    button.classList.add("bg-white", "text-gray-900", "border-2", "border-gray-900");
     button.addEventListener("click", function () {
       handleDriverButtonClick(btn);
     });
@@ -314,21 +325,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
       let driverOption = "";
       if (
-        document.getElementById("withDriverBtn").classList.contains("bg-black")
+        document.getElementById("withDriverBtn").classList.contains("bg-gray-900")
       ) {
         driverOption = "withDriver";
       } else if (
         document
           .getElementById("withoutDriverBtn")
-          .classList.contains("bg-black")
+          .classList.contains("bg-gray-900")
       ) {
         driverOption = "withoutDriver";
       } else if (
-        document.getElementById("driverOnlyBtn").classList.contains("bg-black")
+        document.getElementById("driverOnlyBtn").classList.contains("bg-gray-900")
       ) {
         driverOption = "driverOnly";
       } else if (
-        document.getElementById("goodsBtn").classList.contains("bg-black")
+        document.getElementById("goodsBtn").classList.contains("bg-gray-900")
       ) {
         driverOption = "goods";
       }
