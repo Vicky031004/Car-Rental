@@ -22,8 +22,15 @@ function toggleMenu() {
 }
 
 function toggleDropdown(dropdownId) {
+  console.log("toggleDropdown called with id:", dropdownId);
   const dropdown = document.getElementById(dropdownId);
-  dropdown.classList.toggle("hidden");
+  if (dropdown) {
+    console.log("Dropdown found, current hidden state:", dropdown.classList.contains("hidden"));
+    dropdown.classList.toggle("hidden");
+    console.log("Dropdown toggled, new hidden state:", dropdown.classList.contains("hidden"));
+  } else {
+    console.error("Dropdown element not found:", dropdownId);
+  }
 }
 
 // Function to display search data
@@ -175,10 +182,17 @@ document.addEventListener("DOMContentLoaded", function () {
   // Dropdown functionality
   const dropdownBtn = document.querySelector(".dropdown-btn");
   if (dropdownBtn) {
-    dropdownBtn.addEventListener("click", () =>
-      toggleDropdown("dropdown-menu")
-    );
+    dropdownBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      console.log("Dropdown button clicked");
+      toggleDropdown("dropdown-menu");
+    });
+    console.log("Dropdown event listener added");
+  } else {
+    console.error("Dropdown button not found");
   }
+
 
   // Add event listener to "Back to Search" button
   const backButton = document.querySelector("#backToSearchBtn");
@@ -191,13 +205,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // Add event listener to booking button in navbar
   const bookingNavBtn = document.querySelector(".booking-nav-btn");
   if (bookingNavBtn) {
-    bookingNavBtn.addEventListener("click", function () {
+    bookingNavBtn.addEventListener("click", function (event) {
+      event.preventDefault();
       console.log("Booking nav button clicked");
-      // Add your desired action here, e.g., scroll to booking section
-      const bookingSection = document.querySelector("#booking-section");
-      if (bookingSection) {
-        bookingSection.scrollIntoView({ behavior: "smooth" });
-      }
+      toggleDropdown("dropdown-menu");
     });
   } else {
     console.error("Booking nav button not found");

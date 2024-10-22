@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>Driver Dashboard</title>
+    <link rel="stylesheet" href="input.css" />
+    <link rel="icon" type="image/jpg" href="../img/logo.jpg" />
+    <script
+      src="https://kit.fontawesome.com/535bd2fc8a.js"
+      crossorigin="anonymous"
+    ></script>
+    <script defer src="driver-dashboard.js"></script>
+  </head>
+  <body class="font-sans bg-gray-100">
+    <nav
+      class="bg-white shadow-md flex flex-wrap justify-between items-center px-4 sm:px-6 lg:px-8 py-3 bg-opacity-90"
+    >
+      <div><a href="index.html" class="font-bold text-xl">LOGO</a></div>
+      <button class="lg:hidden" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+      </button>
+      <ul
+        id="menu"
+        class="hidden lg:flex flex-col lg:flex-row space-y-2 lg:space-y-0 lg:space-x-6 w-full lg:w-auto mt-4 lg:mt-0"
+      >
+        <li class="hover:underline font-medium">
+          <a href="index.html">HOME</a>
+        </li>
+        <li class="relative font-medium">
+          <a
+            href="#"
+            class="whitespace-nowrap truncate dropdown-btn hover:underline hover:underline-offset-4"
+            onclick="toggleDropdown('dropdown-menu')"
+          >
+            BOOKING
+            <i class="fas fa-caret-down"></i>
+          </a>
+          <ul
+            id="dropdown-menu"
+            class="hidden absolute bg-white shadow-lg mt-2 w-40 z-10"
+          >
+            <li
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left"
+              onclick="handleSelection('taxi.html')"
+            >
+              <a href="#">TAXI</a>
+            </li>
+            <li
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left"
+              onclick="handleSelection('self-driving.html')"
+            >
+              <a href="#">SELF DRIVING</a>
+            </li>
+            <li
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left"
+              onclick="handleSelection('acting.html')"
+            >
+              <a href="#">ACTING</a>
+            </li>
+            <li
+              class="px-4 py-2 hover:bg-gray-100 cursor-pointer text-left"
+              onclick="handleSelection('goods.html')"
+            >
+              <a href="#">GOODS</a>
+            </li>
+          </ul>
+        </li>
+        <li class="hover:underline hover:underline-offset-4 font-medium">
+          <a href="#">ABOUT US</a>
+        </li>
+        <li class="hover:underline hover:underline-offset-4 font-medium">
+          <a href="#">CONTACT</a>
+        </li>
+        <li class="lg:hidden mt-4">
+          <button
+            class="w-full font-sans p-2 bg-gray-900 text-white text-sm font-semibold rounded-lg border-solid border-2 border-gray-900 hover:bg-white hover:text-gray-900 sign-in-up-btn"
+          >
+            SIGN IN/UP
+          </button>
+        </li>
+      </ul>
+      <div class="hidden lg:block">
+        <button
+          class="font-sans p-2 bg-gray-900 text-white text-sm font-semibold rounded-lg border-solid border-2 border-gray-900 hover:bg-white hover:text-gray-900 sign-in-up-btn"
+        >
+          SIGN IN/UP
+        </button>
+      </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+      <h1 class="text-3xl font-bold mb-6">Driver Dashboard</h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Booking Requests Section -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-xl font-semibold mb-4">Booking Requests</h2>
+          <div id="bookingRequests" class="space-y-4">
+            <!-- Booking request items will be dynamically inserted here -->
+          </div>
+        </div>
+
+        <!-- Upcoming Trips Section -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+          <h2 class="text-xl font-semibold mb-4">Upcoming Trips</h2>
+          <div id="upcomingTrips" class="space-y-4">
+            <!-- Upcoming trip items will be dynamically inserted here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Trip Details Modal -->
+      <div
+        id="tripDetailsModal"
+        class="fixed inset-0 bg-gray-900 bg-opacity-50 overflow-y-auto h-full w-full hidden"
+      >
+        <div
+          class="relative top-20 mx-auto p-5 border w-11/12 md:w-1/2 shadow-lg rounded-md bg-white"
+        >
+          <h3 class="text-lg font-medium text-gray-900 mb-4">Trip Details</h3>
+          <div id="tripDetailsContent">
+            <!-- Trip details will be dynamically inserted here -->
+          </div>
+          <div class="mt-4">
+            <button
+              id="closeTripDetailsModal"
+              class="px-4 py-2 bg-gray-900 text-white rounded-md"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="bg-gray-900 text-white py-8 mt-12">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h1 class="font-bold text-xl mb-4">Logo</h1>
+            <p class="text-sm">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea cum
+              fuga consectetur in pariatur voluptatum at, excepturi minima unde
+              sed.
+            </p>
+          </div>
+          <div>
+            <h1 class="font-bold text-xl mb-4">Services</h1>
+            <ul class="space-y-2">
+              <li>Round trip</li>
+              <li>Cab</li>
+              <li>Goods</li>
+              <li>Acting drivers</li>
+            </ul>
+          </div>
+          <div>
+            <h1 class="font-bold text-xl mb-4">Help</h1>
+            <ul class="space-y-2">
+              <li>Contact</li>
+              <li>Email</li>
+              <li>FAQs</li>
+            </ul>
+          </div>
+        </div>
+        <div class="text-center mt-8">
+          <p>&copy; 2024 Logo, all rights reserved</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
