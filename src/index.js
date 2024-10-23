@@ -192,13 +192,27 @@ document.addEventListener("DOMContentLoaded", function () {
       const returnTime = document.getElementById("returnTime").value;
 
       let driverOption = "";
-      if (document.getElementById("withDriverBtn").classList.contains("bg-gray-900")) {
+      if (
+        document
+          .getElementById("withDriverBtn")
+          .classList.contains("bg-gray-900")
+      ) {
         driverOption = "withDriver";
-      } else if (document.getElementById("withoutDriverBtn").classList.contains("bg-gray-900")) {
+      } else if (
+        document
+          .getElementById("withoutDriverBtn")
+          .classList.contains("bg-gray-900")
+      ) {
         driverOption = "withoutDriver";
-      } else if (document.getElementById("driverOnlyBtn").classList.contains("bg-gray-900")) {
+      } else if (
+        document
+          .getElementById("driverOnlyBtn")
+          .classList.contains("bg-gray-900")
+      ) {
         driverOption = "driverOnly";
-      } else if (document.getElementById("goodsBtn").classList.contains("bg-gray-900")) {
+      } else if (
+        document.getElementById("goodsBtn").classList.contains("bg-gray-900")
+      ) {
         driverOption = "goods";
       }
       localStorage.setItem(
@@ -221,11 +235,14 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       if (driverOption === "driverOnly") {
-        window.location.href = "acting-driver.html";
-      } else if (driverOption === "withDriver" || driverOption === "withoutDriver") {
-        window.location.href = "Selection-Page.html";
+        window.location.href = "./Acting_Driver/acting-driver.html";
+      } else if (
+        driverOption === "withDriver" ||
+        driverOption === "withoutDriver"
+      ) {
+        window.location.href = "./Driver_Selection/Selection-Page.html";
       } else if (driverOption === "goods") {
-        window.location.href = "goods-page.html";
+        window.location.href = "./Goods_Selection/goods-page.html";
       } else {
         alert("Please select a driver option");
       }
