@@ -31,7 +31,7 @@
         <li class="hover:underline font-medium">
           <a href="index.html">HOME</a>
         </li>
-        <li class="relative font-medium">
+        <!-- <li class="relative font-medium">
           <a
             href="#"
             class="whitespace-nowrap truncate dropdown-btn hover:underline hover:underline-offset-4"
@@ -69,12 +69,15 @@
               <a href="#">GOODS</a>
             </li>
           </ul>
+        </li> -->
+        <li class="hover:underline hover:underline-offset-4 font-medium">
+          <a href="#">PROFILE</a>
         </li>
         <li class="hover:underline hover:underline-offset-4 font-medium">
-          <a href="#">ABOUT US</a>
+          <a href="#">EARNINGS</a>
         </li>
         <li class="hover:underline hover:underline-offset-4 font-medium">
-          <a href="#">CONTACT</a>
+          <a href="#">MY RIDES</a>
         </li>
         <li class="lg:hidden mt-4">
           <button
@@ -92,7 +95,59 @@
         </button>
       </div>
     </nav>
-
+    <div
+        id="signModal"
+        class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden z-50"
+      >
+        <div
+          class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white"
+        >
+          <div class="mt-3 text-center">
+            <h3
+              class="text-lg leading-6 font-medium text-gray-900"
+              id="modalTitle"
+            >
+              Sign Up
+            </h3>
+            <div class="mt-2 px-7 py-3">
+              <form id="authForm">
+                <div class="mb-4" id="nameField">
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    class="w-full px-3 py-2 border rounded-md"
+                  />
+                </div>
+                <div class="mb-4">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    class="w-full px-3 py-2 border rounded-md"
+                  />
+                </div>
+                <div class="mb-4">
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    class="w-full px-3 py-2 border rounded-md"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  class="w-full px-4 py-2 bg-gray-900 text-white rounded-md"
+                >
+                  Sign Up
+                </button>
+              </form>
+              <p class="mt-4">
+                <a href="#" id="switchAuth" class="text-blue-500">
+                  Already have an account? Sign In
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+    </div>
     <div class="container mx-auto px-4 py-8">
       <h1 class="text-3xl font-bold mb-6">Driver Dashboard</h1>
 
@@ -138,39 +193,8 @@
       </div>
     </div>
 
-    <footer class="bg-gray-900 text-white py-8 mt-12">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div>
-            <h1 class="font-bold text-xl mb-4">Logo</h1>
-            <p class="text-sm">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ea cum
-              fuga consectetur in pariatur voluptatum at, excepturi minima unde
-              sed.
-            </p>
-          </div>
-          <div>
-            <h1 class="font-bold text-xl mb-4">Services</h1>
-            <ul class="space-y-2">
-              <li>Round trip</li>
-              <li>Cab</li>
-              <li>Goods</li>
-              <li>Acting drivers</li>
-            </ul>
-          </div>
-          <div>
-            <h1 class="font-bold text-xl mb-4">Help</h1>
-            <ul class="space-y-2">
-              <li>Contact</li>
-              <li>Email</li>
-              <li>FAQs</li>
-            </ul>
-          </div>
-        </div>
-        <div class="text-center mt-8">
-          <p>&copy; 2024 Logo, all rights reserved</p>
-        </div>
-      </div>
+    <footer class="bg-gray-900 border-2 border-solid border-gray-900 text-white py-8 mt-28">
+      
     </footer>
   </body>
 </html>
