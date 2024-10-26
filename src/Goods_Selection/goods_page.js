@@ -11,13 +11,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   
     // Goods form submission
-    document
-      .getElementById("goodsForm")
-      .addEventListener("submit", function (e) {
+    document.getElementById("goodsForm").addEventListener("submit", function (e) {
         e.preventDefault();
-        // Add your form submission logic here
-        console.log("Goods form submitted");
-      });
+        
+        // Collect form data
+        const goodsData = {
+            type: document.getElementById("goods-type").value,
+            weight: document.getElementById("weight").value,
+            length: document.getElementById("length").value,
+            width: document.getElementById("width").value,
+            height: document.getElementById("height").value
+        };
+        
+        // Store goods data in localStorage
+        localStorage.setItem("goodsData", JSON.stringify(goodsData));
+        
+        // Redirect to the confirmation page
+        window.location.href = "../Goods_Confirm_Page/goods_confirm_page.html";
+    });
   
     // Sign-in/up modal functionality
     const signBtns = document.querySelectorAll(".sign-in-up-btn");
@@ -60,7 +71,24 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(isSignUp ? "Sign Up" : "Sign In", "submitted");
       signModal.classList.add("hidden");
     });
-  });
+  
+    // Add this function to your goods-page.js file
+    function setSampleGoodsData() {
+      const sampleGoodsData = {
+        type: "Electronics",
+        weight: "25",
+        length: "60",
+        width: "40",
+        height: "30"
+      };
+
+      localStorage.setItem("goodsData", JSON.stringify(sampleGoodsData));
+    }
+
+    // Call this function when the page loads or when you want to set sample data
+    setSampleGoodsData();
+});
+
   
   // Toggle mobile menu
   function toggleMenu() {

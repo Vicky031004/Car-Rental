@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("Retrieved search data:", searchData);
 
   // Add event listeners to all "Select" buttons
-  const selectButtons = document.querySelectorAll(".bg-gray-900");
+  const selectButtons = document.querySelectorAll(".car-select-btn");
   selectButtons.forEach((button) => {
     button.addEventListener("click", function () {
       const carCard = this.closest(".bg-white");
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       // Redirect to the confirmation page
-      window.location.href = "../Confirmation_Page/confirmation_page.html";
+      window.location.href = "../Car_Confirm_Page/car_confirm_page.html";
     });
   });
 
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const backButton = document.querySelector("#backToSearchBtn");
   if (backButton) {
     backButton.addEventListener("click", function () {
-      window.location.href = "index.html";
+      window.location.href = "../index.html";
     });
   }
 
@@ -187,3 +187,5 @@ window.onclick = function (event) {
 
 // Log when the script runs
 console.log("Full JavaScript for Car Selection Page loaded");
+
+

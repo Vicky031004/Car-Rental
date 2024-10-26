@@ -103,40 +103,19 @@ function filterDrivers(searchData) {
 
 // Function to handle booking
 function handleBooking(event) {
-  const driverCard = event.target.closest(".driver-card");
+  const driverCard = event.target.closest(".bg-white.shadow-md.rounded-lg");
   const driverName = driverCard.querySelector("h2").textContent;
-  const searchData = JSON.parse(localStorage.getItem("searchData"));
+  const driverDescription = driverCard.querySelector("p").textContent;
 
-  console.log("Booking initiated for:", driverName);
-  console.log("Search data:", searchData);
+  // Store selected driver information
+  const selectedDriver = {
+    name: driverName,
+    description: driverDescription
+  };
+  localStorage.setItem("selectedDriver", JSON.stringify(selectedDriver));
 
-  if (searchData && searchData.pickupLocation && searchData.dropLocation) {
-    alert(`Booking process initiated for ${driverName}.\n
-      Pick-up: ${searchData.pickupLocation} on ${
-      searchData.pickupDate || "N/A"
-    } at ${searchData.pickupTime || "N/A"}\n
-      Drop-off: ${searchData.dropLocation} on ${
-      searchData.returnDate || "N/A"
-    } at ${searchData.returnTime || "N/A"}`);
-  } else {
-    alert(
-      `Booking process initiated for ${driverName}. No complete search data available.`
-    );
-  }
-
-  // Here you would typically initiate the booking process,
-  // perhaps by opening a modal or navigating to a booking page
-}
-
-// Function to toggle booking options dropdown
-function toggleBookingOptions(event) {
-  console.log("Toggle booking options called");
-  const dropdown = event.target.nextElementSibling;
-  if (dropdown) {
-    dropdown.classList.toggle("hidden");
-  } else {
-    console.error("Dropdown element not found");
-  }
+  // Redirect to the confirmation page
+  window.location.href = "../Acting_Confirm_Page/acting_confirm_page.html";
 }
 
 // Event listener for DOMContentLoaded
@@ -156,51 +135,11 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Set up event listeners for booking buttons
-  const bookButtons = document.querySelectorAll(".book-now-btn");
-  bookButtons.forEach((button) => {
-    button.addEventListener("click", function (event) {
-      console.log("Book Now button clicked");
-      toggleBookingOptions(event);
-    });
+  const bookNowButtons = document.querySelectorAll('.book-now-btn');
+  
+  bookNowButtons.forEach(button => {
+    button.addEventListener('click', handleBooking);
   });
-
-  // Set up event listeners for booking options
-  const bookingOptions = document.querySelectorAll(".booking-option");
-  bookingOptions.forEach((option) => {
-    option.addEventListener("click", handleBooking);
-  });
-
-  // Mobile menu toggle
-  const menuToggle = document.getElementById("menu-toggle");
-  if (menuToggle) {
-    menuToggle.addEventListener("click", toggleMenu);
-    console.log("Menu toggle event listener added");
-  } else {
-    console.error("Menu toggle button not found");
-  }
-
-  // Dropdown functionality
-  const dropdownBtn = document.querySelector(".dropdown-btn");
-  if (dropdownBtn) {
-    dropdownBtn.addEventListener("click", function(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      console.log("Dropdown button clicked");
-      toggleDropdown("dropdown-menu");
-    });
-    console.log("Dropdown event listener added");
-  } else {
-    console.error("Dropdown button not found");
-  }
-
-
-  // Add event listener to "Back to Search" button
-  const backButton = document.querySelector("#backToSearchBtn");
-  if (backButton) {
-    backButton.addEventListener("click", function () {
-      window.location.href = "index.html";
-    });
-  }
 
   // Add event listener to booking button in navbar
   const bookingNavBtn = document.querySelector(".booking-nav-btn");
@@ -260,18 +199,6 @@ document.addEventListener("DOMContentLoaded", function () {
     signModal.classList.add("hidden");
   });
 });
-
-// Close dropdowns when clicking outside
-window.onclick = function (event) {
-  if (!event.target.matches(".book-now-btn")) {
-    const dropdowns = document.querySelectorAll(".booking-options");
-    dropdowns.forEach((openDropdown) => {
-      if (!openDropdown.classList.contains("hidden")) {
-        openDropdown.classList.add("hidden");
-      }
-    });
-  }
-};
 
 // Log when the script runs
 console.log("Full JavaScript for Acting Driver Page loaded");

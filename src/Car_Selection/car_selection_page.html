@@ -13,7 +13,7 @@
       src="https://kit.fontawesome.com/535bd2fc8a.js"
       crossorigin="anonymous"
     ></script>
-    <script defer src="Selection_Page.js"></script>
+    <script defer src="car_selection_page.js"></script>
   </head>
   <body class="font-sans bg-gray-100">
     <nav
@@ -68,7 +68,7 @@
           </ul>
         </li>
         <li class="hover:underline hover:underline-offset-4 font-medium">
-          <a href="#">ABOUT US</a>
+          <a href="#">ABOUT</a>
         </li>
         <li class="hover:underline hover:underline-offset-4 font-medium">
           <a href="#">CONTACT</a>
@@ -146,7 +146,7 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 mt-8">
       <h1 class="text-3xl font-bold mb-6">Select Your Car</h1>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Car Card 1 -->
         <div class="bg-white rounded-lg shadow-md overflow-hidden">
           <img
@@ -162,7 +162,8 @@
               <span class="text-sm text-gray-500">per day</span>
             </div>
             <button
-              class="w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              class="car-select-btn w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              
             >
               Select
             </button>
@@ -184,7 +185,7 @@
               <span class="text-sm text-gray-500">per day</span>
             </div>
             <button
-              class="w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              class="car-select-btn w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
             >
               Select
             </button>
@@ -204,7 +205,7 @@
               <span class="text-sm text-gray-500">per day</span>
             </div>
             <button
-              class="w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              class="car-select-btn w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
             >
               Select
             </button>
@@ -224,7 +225,7 @@
               <span class="text-sm text-gray-500">per day</span>
             </div>
             <button
-              class="w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              class="car-select-btn w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
             >
               Select
             </button>
@@ -244,7 +245,7 @@
               <span class="text-sm text-gray-500">per day</span>
             </div>
             <button
-              class="w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              class="car-select-btn w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
             >
               Select
             </button>
@@ -266,7 +267,7 @@
               <span class="text-sm text-gray-500">per day</span>
             </div>
             <button
-              class="w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              class="car-select-btn w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
             >
               Select
             </button>
@@ -286,7 +287,7 @@
               <span class="text-sm text-gray-500">per day</span>
             </div>
             <button
-              class="w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              class="car-select-btn w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
             >
               Select
             </button>
@@ -306,7 +307,7 @@
               <span class="text-sm text-gray-500">per day</span>
             </div>
             <button
-              class="w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
+              class="car-select-btn w-full bg-gray-900 text-white p-2 rounded-lg hover:bg-gray-800 transition duration-300"
             >
               Select
             </button>
@@ -318,6 +319,7 @@
         <button
           id="backToSearchBtn"
           class="bg-gray-900 text-white p-2 rounded-lg px-4 hover:bg-gray-800 transition duration-300"
+          onclick="handleBackToSearch()"
         >
           <i class="fas fa-arrow-left mr-2"></i> Back to Search
         </button>

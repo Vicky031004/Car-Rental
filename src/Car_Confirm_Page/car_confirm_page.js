@@ -48,14 +48,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Add event listener for Modify Booking button
     const modifyBookingBtn = document.getElementById("modifyBookingBtn");
     modifyBookingBtn.addEventListener("click", function() {
-        window.location.href = "../Driver_Selection/Selection-Page.html";
+        window.location.href = "../Car_Selection/car_selection_page.html";
     });
 
     // Add event listener for Confirm Booking button
     const confirmBookingBtn = document.getElementById("confirmBookingBtn");
     confirmBookingBtn.addEventListener("click", function() {
         // Redirect to the final page
-        window.location.href = "../Final_Page/final_page.html";
+        window.location.href = "../Car_Final_Page/car_final_page.html";
     });
 });
 

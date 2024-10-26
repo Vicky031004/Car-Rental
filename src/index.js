@@ -372,14 +372,14 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       if (driverOption === "driverOnly") {
-        window.location.href = "./Acting_Driver/acting-driver.html";
+        window.location.href = "./Acting_Selection/acting_selection.html";
       } else if (
         driverOption === "withDriver" ||
         driverOption === "withoutDriver"
       ) {
-        window.location.href = "./Driver_Selection/Selection-Page.html";
+        window.location.href = "./Car_Selection/car_selection_page.html";
       } else if (driverOption === "goods") {
-        window.location.href = "./Goods_Selection/goods-page.html";
+        window.location.href = "./Goods_Selection/goods_page.html";
       } else {
         alert("Please select a driver option");
       }
