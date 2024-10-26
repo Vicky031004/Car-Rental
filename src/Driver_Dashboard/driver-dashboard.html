@@ -14,11 +14,19 @@
       src="https://kit.fontawesome.com/535bd2fc8a.js"
       crossorigin="anonymous"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6/turf.min.js"></script>
     <script defer src="driver-dashboard.js"></script>
   </head>
   <body class="font-sans bg-gray-100">
     <nav
-      class="bg-white shadow-md flex flex-wrap justify-between items-center px-4 sm:px-6 lg:px-8 py-3 bg-opacity-90"
+      class="flex flex-wrap justify-between items-center px-4 sm:px-6 lg:px-8 py-3 bg-white bg-opacity-90"
     >
       <div><a href="../index.html" class="font-bold text-xl">LOGO</a></div>
       <button class="lg:hidden" onclick="toggleMenu()">
@@ -31,7 +39,7 @@
         <li class="hover:underline font-medium">
           <a href="../index.html">HOME</a>
         </li>
-        <!-- <li class="relative font-medium">
+        <li class="relative font-medium">
           <a
             href="#"
             class="whitespace-nowrap truncate dropdown-btn hover:underline hover:underline-offset-4"
@@ -69,15 +77,12 @@
               <a href="#">GOODS</a>
             </li>
           </ul>
-        </li> -->
-        <li class="hover:underline hover:underline-offset-4 font-medium">
-          <a href="#">PROFILE</a>
         </li>
         <li class="hover:underline hover:underline-offset-4 font-medium">
-          <a href="#">EARNINGS</a>
+          <a href="./Driver_Dashboard/driver-dashboard.html">DRIVER DASH</a>
         </li>
         <li class="hover:underline hover:underline-offset-4 font-medium">
-          <a href="#">MY RIDES</a>
+          <a href="./Admin_Dashboard/admin-dashboard.html">ADMIN DASH</a>
         </li>
         <li class="lg:hidden mt-4">
           <button
@@ -148,10 +153,26 @@
         </div>
       </div>
     </div>
+
     <div class="container mx-auto px-4 py-8">
       <h1 class="text-3xl font-bold mb-6">Driver Dashboard</h1>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Earnings Chart Section -->
+        <div class="bg-white p-6 rounded-lg shadow-md col-span-1 md:col-span-1">
+          <h2 class="text-xl font-semibold mb-4">Earnings Overview</h2>
+          <div class="mb-4">
+            <select id="earningsTimeRange" class="p-2 border rounded">
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+          <div style="height: 300px; width: 100%">
+            <canvas id="earningsChart"></canvas>
+          </div>
+        </div>
+
         <!-- Booking Requests Section -->
         <div class="bg-white p-6 rounded-lg shadow-md">
           <h2 class="text-xl font-semibold mb-4">Booking Requests</h2>
@@ -195,6 +216,8 @@
 
     <footer
       class="bg-gray-900 border-2 border-solid border-gray-900 text-white py-8 mt-28"
-    ></footer>
+    >
+      <!-- Footer content -->
+    </footer>
   </body>
 </html>

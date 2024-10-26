@@ -69,6 +69,135 @@ function handleDriverButtonClick(buttonId) {
   });
 }
 
+function isDateTimeValid() {
+  const pickupLocation = document.getElementById("pickupLocation").value.trim();
+  const dropLocation = document.getElementById("dropLocation").value.trim();
+  const pickupDate = new Date(document.getElementById("pickupDate").value);
+  const pickupTime = document.getElementById("pickupTime").value;
+  const returnDate = new Date(document.getElementById("returnDate").value);
+  const returnTime = document.getElementById("returnTime").value;
+
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+
+  const pickupDateTime = new Date(pickupDate.getTime());
+  pickupDateTime.setHours(...pickupTime.split(":").map(Number));
+
+  const returnDateTime = new Date(returnDate.getTime());
+  returnDateTime.setHours(...returnTime.split(":").map(Number));
+
+  if (pickupLocation === dropLocation) {
+    alert("Pickup and drop locations cannot be the same");
+    return false;
+  }
+
+  if (pickupDate < now) {
+    alert("Pickup date cannot be in the past");
+    return false;
+  }
+
+  if (returnDate < pickupDate) {
+    alert("Return date cannot be earlier than pickup date");
+    return false;
+  }
+
+  if (pickupDateTime.getTime() === returnDateTime.getTime()) {
+    alert("Pickup and return date/time cannot be exactly the same");
+    return false;
+  }
+
+  if (
+    returnDate.getTime() === pickupDate.getTime() &&
+    returnTime <= pickupTime
+  ) {
+    alert("For same-day bookings, return time must be later than pickup time");
+    return false;
+  }
+
+  return true;
+}
+
+function initAutocomplete() {
+  const pickupInput = document.getElementById("pickupLocation");
+  const dropInput = document.getElementById("dropLocation");
+
+  [pickupInput, dropInput].forEach((input) => {
+    input.addEventListener(
+      "input",
+      debounce(function () {
+        const query = this.value;
+        if (query.length > 2) {
+          fetch(
+            `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
+              query
+            )}&countrycodes=in&limit=5`
+          )
+            .then((response) => response.json())
+            .then((data) => {
+              const suggestions = data.map((item) => item.display_name);
+              showSuggestions(this, suggestions);
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              showSuggestions(this, []); // Clear suggestions on error
+            });
+        } else {
+          showSuggestions(this, []); // Clear suggestions if input is too short
+        }
+      }, 300)
+    );
+
+    // Close suggestions when clicking outside
+    document.addEventListener("click", function (e) {
+      if (e.target !== input) {
+        showSuggestions(input, []);
+      }
+    });
+  });
+}
+
+function showSuggestions(input, suggestions) {
+  let suggestionList = input.nextElementSibling;
+  if (
+    !suggestionList ||
+    !suggestionList.classList.contains("suggestion-list")
+  ) {
+    suggestionList = document.createElement("ul");
+    suggestionList.className = "suggestion-list";
+    input.parentNode.insertBefore(suggestionList, input.nextSibling);
+  }
+
+  suggestionList.innerHTML = "";
+  suggestions.forEach((suggestion) => {
+    const li = document.createElement("li");
+    li.textContent = suggestion;
+    li.addEventListener("click", () => {
+      input.value = suggestion;
+      showSuggestions(input, []); // Clear suggestions after selection
+    });
+    suggestionList.appendChild(li);
+  });
+
+  // Show/hide the suggestion list
+  if (suggestions.length > 0) {
+    suggestionList.style.display = "block";
+  } else {
+    suggestionList.style.display = "none";
+  }
+}
+
+function debounce(func, wait) {
+  let timeout;
+  return function executedFunction(...args) {
+    const later = () => {
+      clearTimeout(timeout);
+      func.apply(this, args);
+    };
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+  };
+}
+
 document.addEventListener("DOMContentLoaded", function () {
   const signBtns = document.querySelectorAll(".sign-in-up-btn");
   const signModal = document.getElementById("signModal");
@@ -183,13 +312,20 @@ document.addEventListener("DOMContentLoaded", function () {
   searchBtn.addEventListener("click", function (e) {
     e.preventDefault();
 
-    if (areAllFieldsFilled()) {
-      const pickupLocation = document.getElementById("pickupLocation").value;
-      const dropLocation = document.getElementById("dropLocation").value;
+    if (areAllFieldsFilled() && isDateTimeValid()) {
+      const pickupLocation = document
+        .getElementById("pickupLocation")
+        .value.trim();
+      const dropLocation = document.getElementById("dropLocation").value.trim();
       const pickupDate = document.getElementById("pickupDate").value;
       const pickupTime = document.getElementById("pickupTime").value;
       const returnDate = document.getElementById("returnDate").value;
       const returnTime = document.getElementById("returnTime").value;
+
+      if (pickupLocation === dropLocation) {
+        alert("Pickup and drop locations cannot be the same");
+        return;
+      }
 
       let driverOption = "";
       if (
@@ -215,6 +351,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ) {
         driverOption = "goods";
       }
+
       localStorage.setItem(
         "searchData",
         JSON.stringify({
@@ -246,9 +383,11 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         alert("Please select a driver option");
       }
-    } else {
+    } else if (!areAllFieldsFilled()) {
       alert("Please fill in all fields");
     }
   });
   console.log("Search script loaded");
+
+  initAutocomplete();
 });

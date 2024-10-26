@@ -116,8 +116,8 @@ document.addEventListener("DOMContentLoaded", function () {
         })
       );
 
-      // Redirect to a booking confirmation page (you'll need to create this)
-      window.location.href = "booking-confirmation.html";
+      // Redirect to the confirmation page
+      window.location.href = "../Confirmation_Page/confirmation_page.html";
     });
   });
 
